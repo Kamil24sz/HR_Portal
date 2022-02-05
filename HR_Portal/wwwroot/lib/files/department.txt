@@ -1,0 +1,5 @@
+[
+	{"DepartmentId":1,"DepartmentName":"Human Resources","DirectorId":4},
+	{"DepartmentId":2,"DepartmentName":"IT Support","DirectorId":2},
+	{"DepartmentId":3,"DepartmentName":"Accounting and Finance","DirectorId":6}
+]

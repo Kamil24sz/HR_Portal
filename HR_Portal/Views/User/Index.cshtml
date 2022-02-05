@@ -1,0 +1,59 @@
+﻿@using HR_Portal.Models;
+@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-white">Users List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="User" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i>&nbsp Create New User</a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-stripped user-table" style="width:100%">
+    <thead>
+        <tr class="table-dark">
+            <th>Name</th>
+            <th>Position</th>
+            <th>Manager</th>
+            <th>Joined</th>
+            <th>Vacation Days</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in ViewBag.Users)
+        {
+
+            <tr class="table-primary">
+                <td>
+                    @obj.FirstName @obj.LastName
+                </td>
+                <td>
+                    @if(obj.PositionId is not null)
+                    @obj.PositionName
+                </td>
+                <td>
+                    @if(obj.ManagerId is not null)
+                    @obj.ManagerFirstName @obj.ManagerLastName
+                </td>
+                <td>
+                    @obj.CreationDate.ToString("dd/MM/yyy")
+                </td>
+                <td>
+                    @obj.VacationDays
+                </td>
+                <td>
+                    <div>
+                        <a asp-controller="User" asp-action="Edit" asp-route-id="@obj.UserId" class="btn btn-sm btn-primary"> <i class="bi bi-pencil-square"></i> Edit</a>
+                        <a asp-controller="User" asp-action="Delete" asp-route-id="@obj.UserId" class="btn btn-sm btn-danger"> <i class="bi bi-trash-fill"></i> Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

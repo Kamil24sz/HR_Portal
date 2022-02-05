@@ -1,0 +1,94 @@
+﻿@using HR_Portal.Models;
+@model TrainingDestination;
+
+@{
+    ViewData["Title"] = "Assign";
+}
+@if (ViewData["Assigned"] is not null)
+{
+    <div class="alert alert-dismissible alert-warning mt-4">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p class="mb-0">You have been already assigned or you completed this training, please choose another one.</p>
+    </div>
+}
+
+
+@if(ViewBag.Trainings is not null){
+    
+        <form method="post" asp-action="Select">
+            <div class="border border-secondary rounded p-3 mt-4">
+                <h2 class="text-white"><i class="bi bi-box"></i> Assign to Training</h2>
+                <br />
+                
+            @if (ViewBag.Result is not null)
+            {
+                foreach (var obj in ViewBag.Result)
+                {
+                    <div class="mb-3">
+                        <label class="label-gray"><i class="bi bi-people"></i> Training Name</label>
+                        <select class="input2" default=3 name="id" onchange="change()" id="select-list">
+                            @foreach (var tr in ViewBag.Trainings)
+                                {
+                                    <option value="@tr.TrainingId">@tr.TrainingName</option>
+                                }
+                        </select>
+                    </div>
+                    <input value="@obj.TrainingId" id="training" hidden/>
+                    <div class="mb-3">
+                        <label class="label-gray"><i class="bi bi-people"></i> Training Type</label>
+                        <input value="@obj.TrainingType" class="input2" />
+                    </div>        
+                    <div class="mb-3">
+                        <label class="label-gray"><i class="bi bi-coin"></i> Cost</label>
+                        <input value="@obj.Cost" class="input2" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="label-gray"><i class="bi bi-house"></i> Description</label>
+                        <textarea class="input2" rows="3">@obj.Description</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="refresh" hidden>refresh</button>
+                    <a asp-controller="Training" asp-action="UserTrainings" class="btn btn-primary" style="width:150px">Back to list</a>
+                    <a class="btn btn-success" onclick="assign()">Assign</a>
+                }
+            }
+             </div>
+         </form>
+         }
+         @if (ViewBag.Result is not null)
+            {
+                foreach (var obj in ViewBag.Result)
+                {
+                    <form method="post" asp-action="Assign" style="display:none">
+                        <input asp-for="TrainingId" value="@obj.TrainingId">
+                        <input asp-for="UserId" value="@ViewData["User"]">
+                        <input asp-for="Progress" value="@Decimal.ToInt32(obj.Cost)">
+                        <button type="submit" class="btn btn-primary" id="assign" hidden>submit</button>
+                    </form>
+                }
+            }
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script type="text/javascript">
+        function change(){
+            document.getElementById("refresh").click();
+        }
+        function assign(){
+            document.getElementById("assign").click();
+        }
+        
+        var training = document.getElementById("training");
+        var select = document.getElementById("select-list");
+
+        
+        for(var x = 0; x< select.options.length; x++){
+            if(select.options[x].value == training.value)
+                select.options[x].selected = 'selected';
+        }
+
+
+    </script>
+}

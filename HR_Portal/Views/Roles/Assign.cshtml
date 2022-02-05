@@ -1,0 +1,42 @@
+﻿@using HR_Portal.Models;
+@model Position;
+@{
+    ViewData["Title"] = "Assign";
+}
+@if (ViewBag.Users is not null)
+@if(ViewBag.Roles is not null)
+{
+    <form method="post" asp-action="Assign">
+        <div class="border border-secondary rounded p-3 mt-4">
+            <h2 class="text-white"><i class="bi bi-box"></i> Assign Role to User</h2>
+            <br />
+            <div class="mb-3">
+                <label class="label-gray"><i class="bi bi-people"></i> User</label>
+                <select class="input2" name="user">
+                    @foreach (var obj in ViewBag.Users)
+                    {
+                        <option value="@obj.Id">@obj.FirstName @obj.LastName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="label-gray"><i class="bi bi-people"></i> Role</label>
+                <select class="input2" name="role">
+                    @foreach (var obj in ViewBag.Roles)
+                    {
+                        <option value="@obj.Name">@obj.Name</option>
+                    }
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width:150px">Assign</button>
+            <a asp-controller="Roles" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+        </div>
+    </form>
+}
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

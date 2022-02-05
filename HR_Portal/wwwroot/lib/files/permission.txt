@@ -1,0 +1,5 @@
+[
+	{"PermissionId":1,"PermissionName":"Standard User","UsersCRUD":4,"PositionsCRUD":4,"DepartmentsCRUD":4,"RequestsCRUD":0,"TreningsCRUD":0},
+	{"PermissionId":2,"PermissionName":"HR","UsersCRUD":4,"PositionsCRUD":15,"DepartmentsCRUD":15,"RequestsCRUD":15,"TreningsCRUD":0},
+	{"PermissionId":3,"PermissionName":"IT","UsersCRUD":4,"PositionsCRUD":15,"DepartmentsCRUD":15,"RequestsCRUD":15,"TreningsCRUD":15}
+]

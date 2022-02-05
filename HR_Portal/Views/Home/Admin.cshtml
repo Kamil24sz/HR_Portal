@@ -1,0 +1,168 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using HR_Portal.Models;
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "Admin";
+}
+
+
+<h2 class="text-white mt-lg-4 mb-4" style="text-align: center">Admin Panel</h2>
+<h4 class="text-white">Your permissions:</h4>
+<h5 class = "text-white mb-3">
+@if(ViewBag.Roles is not null){
+    foreach(var obj in ViewBag.Roles){
+        <span>@obj </span>
+    }
+}
+</h5>
+
+<div class="container">
+@if(ViewBag.Roles is not null){
+    string userRoles = ViewData["userRoles"].ToString();
+        <div class="row no-gutters">
+            @if (userRoles.Contains("HR"))
+            {
+                <div class="col-md-4">
+                    <div class="card text-white bg-secondary mb-4" style="max-width: 25rem; min-height: 20rem;">
+                        <div class="card-header"><i class="bi bi-person-bounding-box"></i> User</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Users</h5>
+                            <p class="card-text">Your permissions allow:</p>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="User" asp-action="Index">View</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="User" asp-action="Create" >Create</a>
+                            </div>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="User" asp-action="Index" >Edit</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="User" asp-action="Index" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-secondary mb-4" style="max-width: 25rem; min-height: 20rem">
+                        <div class="card-header"><i class="bi bi-info-square-fill"></i> Positions</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Positions</h5>
+                            <p class="card-text">Your permissions allow:</p>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Position" asp-action="Index" >View</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Position" asp-action="Create" >Create</a>
+                            </div>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Position" asp-action="Index" >Edit</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Position" asp-action="Index" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+                @if (userRoles.Contains("HR") || userRoles.Contains("IT"))
+            {
+                <div class="col-md-4">
+                    <div class="card text-white bg-secondary mb-4" style="max-width: 25rem; min-height: 20rem">
+                        <div class="card-header"><i class="bi bi-briefcase-fill"></i> Departments</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Departments</h5>
+                            <p class="card-text">Your permissions allow:</p>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Department" asp-action="Index" >View</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Department" asp-action="Create" >Create</a>
+                            </div>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Department" asp-action="Index" >Edit</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Department" asp-action="Index" >Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              }
+            </div>
+            <div class="row">
+                @if (userRoles.Contains("Admin")){
+                <div class="col-sm">
+                    <div class="card text-white bg-secondary mb-4"  style="max-width: 25rem; min-height: 20rem">
+                        <div class="card-header"><i class="bi bi-book-fill"></i> Permissions</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Permissions</h5>
+                            <p class="card-text">Your permissions allow:</p>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Roles" asp-action="Index" >View</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Roles" asp-action="Create" >Create</a>
+                            </div>
+                            <div class="row justify-content-center">
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Roles" asp-action="Assign">Assign</a>
+                                <div class="col-1"></div>
+                                <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Roles" asp-action="UnAssign">UnAssign</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            @if (userRoles.Contains("HR") || userRoles.Contains("IT"))
+            {
+                <div class="col-sm">
+                    <div class="col-sm">
+                        <div class="card text-white bg-secondary mb-4" style="max-width: 25rem; min-height: 20rem">
+                            <div class="card-header"><i class="bi bi-pc-display"></i> Trainings</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Manage Trainings</h5>
+                                <p class="card-text">Your permissions allow:</p>
+                                <div class="row justify-content-center">
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Training" asp-action="Index" >View</a>
+                                    <div class="col-1"></div>
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Training" asp-action="Create" >Create</a>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Training" asp-action="Index" >Edit</a>
+                                    <div class="col-1"></div>
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Training" asp-action="Index" >Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            @if (userRoles.Contains("HR"))
+            {
+                <div class="col-sm">
+                    <div class="col-sm">
+                        <div class="card text-white bg-secondary mb-4" style="max-width: 25rem; min-height: 20rem">
+                            <div class="card-header"><i class="bi bi-newspaper"></i> Employee Requests</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Manage Employee Requests</h5>
+                                <p class="card-text">Your permissions allow:</p>
+                                <div class="row justify-content-center">
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Request" asp-action="ViewAll" >All</a>
+                                    <div class="col-1"></div>
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Request" asp-action="ViewHR" >For Approve</a>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Request" asp-action="ViewAll" >Edit or Delete</a>
+                                    <div class="col-1"></div>
+                                    <a class="nav-link text-white btn btn-primary mb-4 col-5" style="min-height: 5rem; line-height: 5rem;" asp-controller="Request" asp-action="ViewHR" >Aprove or Reject</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        @if (!userRoles.Contains("HR") && !userRoles.Contains("IT") && !userRoles.Contains("Admin"))
+        {
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <h4 class="alert-heading">Alert!</h4>
+                <p class="mb-0">Sorry! You don't have high enough privilages to administrative any item!</p>
+            </div>
+        }
+    }
+    }
+</div>

@@ -1,0 +1,8 @@
+[
+	{"PositionId":1,"PositionName":"HR Manager","DepartmentId":1,"BaseSalary":3500},
+	{"PositionId":2,"PositionName":"Business Partner","DepartmentId":1,"BaseSalary":3900},
+	{"PositionId":3,"PositionName":"Team Leader","DepartmentId":2,"BaseSalary":4000},
+	{"PositionId":4,"PositionName":"IT Support Specialist","DepartmentId":2,"BaseSalary":3700},
+	{"PositionId":5,"PositionName":"Main Accountant","DepartmentId":3,"BaseSalary":3400},
+	{"PositionId":6,"PositionName":"Finnancial Controller","DepartmentId":3,"BaseSalary":3500}
+]

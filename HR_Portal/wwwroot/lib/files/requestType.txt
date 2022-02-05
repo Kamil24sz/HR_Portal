@@ -1,0 +1,7 @@
+[
+	{"RequestTypeId":1,"RequestName":"Take Day Off","AdditionalDetails":"Select dates when you want to take days off."},
+	{"RequestTypeId":2,"RequestName":"Report Sickness","AdditionalDetails":"Select dates for sick Leave. Remember to send medical document to HR Person."},
+	{"RequestTypeId":3,"RequestName":"Create Vacation Plan","AdditionalDetails":"Select dates when you want to have vacation."},
+	{"RequestTypeId":4,"RequestName":"Report Delegation","AdditionalDetails":"Select delegation date, costs which are on you, plece where you been."},
+	{"RequestTypeId":5,"RequestName":"Change Personal Data","AdditionalDetails":"Provide data, that you would like to change."}
+]

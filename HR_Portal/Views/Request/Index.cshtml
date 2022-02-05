@@ -1,0 +1,108 @@
+﻿@using HR_Portal.Models;
+@model IEnumerable<Request>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-white">Requests List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Request" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i>&nbsp Create New Request</a>
+        </div>
+    </div>
+</div>
+@if (ViewData["PendingHR"] is not null)
+{
+    <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p class="mb-0">You have requests with status <strong>Pending HR confirmation</strong>, please send all required documents attached via e-mail to any of HR Person in order to processed the request.</p>
+    </div>
+}
+@if (ViewBag.Result is not null)
+{
+    <table class="table table-bordered table-stripped user-table mb-5" style="width:100%">
+        <thead>
+            <tr class="table-dark">
+                <th>ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Creation Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in ViewBag.Result)
+            {
+
+                <tr class="table-primary">
+                    <td>
+                        @obj.RequestId
+                    </td>
+                    <td>
+                        @obj.RequestName
+                    </td>
+                    <td>
+                        @obj.StatusName
+                    </td>
+                    <td>
+                        @obj.CreationDate
+                    </td>
+                    <td>
+                        <div>
+                            <a asp-controller="Request" asp-action="Info" asp-route-id="@obj.RequestId" class="btn btn-sm btn-primary"> <i class="bi bi-info-circle"></i> Info</a>
+                            <a asp-controller="Request" asp-action="Delete" asp-route-id="@obj.RequestId" class="btn btn-sm btn-danger"> <i class="bi bi-trash-fill"></i> Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-dismissible alert-danger">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        There is no request assigned to you, <a asp-controller="Request" asp-action="Create" class="alert-link">create new one</a> if you need!
+    </div>
+}
+<div class="row">
+@if(ViewBag.Manager is not null)
+{
+    <div class="row col-md-4 d-block">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+         <div class="card-header"><i class="bi bi-briefcase-fill"></i> Manager</div>
+         <div class="card-body">
+        <h4 class="card-title">Manager contacts details</h4>
+        <p class="card-text">@ViewBag.Manager</p>
+            @if (ViewBag.ManagerEmail is not null)
+            {
+                <p>@ViewBag.ManagerEmail[0].Email</p>
+            }
+        </div>
+        </div>
+    </div>
+}
+@if(ViewBag.HR is not null){
+    <div class="row col-md-8 justify-content-between">
+        @{int counter = 0;}
+    @foreach (var obj in ViewBag.HR)
+    {
+            counter++;
+         <div class="col-lg card text-white bg-info mb-3" style="max-width: 20rem;">
+            <div class="card-header"><i class="bi bi-link-45deg"></i> HR Person</div>
+            <div class="card-body">
+            <h4 class="card-title">contacts details</h4>
+            <p class="card-text">@obj.FirstName @obj.LastName</p>
+            <p class="card-text">@obj.Email</p>
+            </div>
+        </div>
+        @if(counter%2==0){
+            <div class="w-100"></div>
+        }
+     }
+    </div>
+}
+</div>

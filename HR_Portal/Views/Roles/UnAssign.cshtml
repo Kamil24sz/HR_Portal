@@ -1,0 +1,43 @@
+﻿@using HR_Portal.Models;
+@model Position;
+@{
+    ViewData["Title"] = "Delete";
+}
+<form method="post" asp-action="DeletePOST">
+    <input asp-for="PositionId" name="id" hidden />
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-box"></i> Delete Position</h2>
+        <div asp-validation-summary="All" class="text-warning"></div>
+        <br />
+        <div class="mb-3">
+            <label class="label-gray" asp-for="PositionName"><i class="bi bi-card-text"></i> Position Name</label>
+            <input asp-for="PositionName" class="input2" disabled/>
+            <span asp-validation-for="PositionName" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="DepartmentId"><i class="bi bi-people"></i> Department</label>
+            <select class="input2" asp-for="DepartmentId" id="select-department" disabled>
+                <option value="">-No department-</option>
+                @if(ViewBag.Departments is not null)
+                @foreach(var obj in ViewBag.Departments)
+                {
+                    <option value="@obj.DepartmentId">@obj.DepartmentName</option>
+                }
+            </select>
+            <span asp-validation-for="DepartmentId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="BaseSalary"><i class="bi bi-coin"></i> Base Salary</label>
+            <input asp-for="BaseSalary" class="input2" disabled/>
+            <span asp-validation-for="BaseSalary" class="text-warning"></span>
+        </div>
+        <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
+        <a asp-controller="Position" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

@@ -1,0 +1,6 @@
+[
+	{"StatusId":1,"StatusName":"Pending Manager Approval"},
+	{"StatusId":2,"StatusName":"Pending HR Confirmation"},
+	{"StatusId":3,"StatusName":"Rejected"},
+	{"StatusId":4,"StatusName":"Approved"},
+]

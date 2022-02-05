@@ -1,0 +1,88 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using HR_Portal.Models;
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h2 class="text-white mt-lg-4 mb-4" style="text-align: center">User Panel</h2>
+
+
+
+<div class="container">
+  <div class="row no-gutters">
+        <div class="col-md-4">
+             <a class="nav-link text-dark" asp-controller="User" asp-action="RedirectTOManageData" style="padding:0">
+                 <div class="card text-white bg-secondary mb-4 interface-item it-1" style="max-width: 25rem; min-height: 20rem;">
+                     <div class="card-header"><i class="bi bi-person-bounding-box"></i> User</div>
+                     <div class="card-body">
+                         <h5 class="card-title">Manage Personal Data</h5>
+                         <p class="card-text">Update personal data, change password, check corectness of your data.</p>
+                     </div>
+                 </div>
+             </a>
+        </div>
+        <div class="col-md-4">
+            <a class="nav-link text-dark" asp-controller="Request" asp-action="Index" style="padding:0">
+              <div class="card text-white bg-secondary mb-4 interface-item it-2" style="max-width: 25rem; min-height: 20rem">
+                  <div class="card-header"><i class="bi bi-info-square-fill"></i> Request</div>
+                  <div class="card-body">
+                      <h5 class="card-title">Create Employee Request</h5>
+                      <p class="card-text">Made vacation plan, report day off or sickness, add delegation, request for new training.</p>
+                  </div>
+              </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+              <a class="nav-link text-dark" asp-controller="Request" asp-action="Manager" style="padding:0">
+                <div class="card text-white bg-secondary mb-4 interface-item it-3" style="max-width: 25rem; min-height: 20rem">
+                    <div class="card-header"><i class="bi bi-briefcase-fill"></i> Manager Panel</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Manage your Employees</h5>
+                        <p class="card-text">Take a look at your employees, handle their requests, change salary bonus.</p>
+                    </div>
+                </div>
+              </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+          <a class="nav-link text-dark" asp-controller="Training" asp-action="UserTrainings" style="padding:0"> 
+            <div class="card text-white bg-secondary mb-4 interface-item it-4"  style="max-width: 25rem; min-height: 20rem">
+                <div class="card-header"><i class="bi bi-book-fill"></i> Training</div>
+                <div class="card-body">
+                    <h5 class="card-title">Improve your skills!</h5>
+                    <p class="card-text">Join to multiple trainings, lear new things, improve your qualification.</p>
+                </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-sm">
+          <div class="col-sm">
+              <a class="nav-link text-dark" asp-controller="Home" asp-action="Admin" style="padding:0">
+                <div class="card text-white bg-secondary mb-4 interface-item it-5" style="max-width: 25rem; min-height: 20rem">
+                    <div class="card-header"><i class="bi bi-pc-display"></i> Admin</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Administrative panel</h5>
+                        <p class="card-text">Add or edit some structre cattegory like position, departments, trainings, you will have to have some additional permissions to perform this operations.</p>
+                    </div>
+                </div>
+              </a>
+            </div>
+        </div>
+        <div class="col-sm">
+          <div class="col-sm">
+              <a class="nav-link text-dark" asp-controller="Home" asp-action="News" style="padding:0">
+                <div class="card text-white bg-secondary mb-4 interface-item it-6" style="max-width: 25rem; min-height: 20rem">
+                    <div class="card-header"><i class="bi bi-newspaper"></i> News</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Newest informations</h5>
+                        <p class="card-text">Read actual announcements and events about HR_Portal and organization.</p>
+                    </div>
+                </div>
+              </a>
+            </div>
+        </div>
+    </div>
+</div>

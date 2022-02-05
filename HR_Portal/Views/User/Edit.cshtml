@@ -1,0 +1,97 @@
+﻿@using HR_Portal.Models;
+@model User;
+@{
+    ViewData["Title"] = "Edit";
+}
+<form method="post" asp-action="edit">
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-person-circle"></i> Update User</h2>
+        <div asp-validation-summary="All" class="text-warning"></div>
+        <br />
+        <input asp-for="CreationDate" class="input2" hidden/>
+        <div class="mb-3" style="display:none">
+            <label class="label-gray" asp-for="UserId"><i class="bi bi-person"></i> User ID</label>
+            <input asp-for="UserId" class="input2"/>
+            <span asp-validation-for="UserId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="FirstName"><i class="bi bi-person"></i> First Name</label>
+            <input asp-for="FirstName" class="input2"/>
+            <span asp-validation-for="FirstName" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="LastName"><i class="bi bi-people"></i> Last Name</label>
+            <input asp-for="LastName" class="input2" />
+            <span asp-validation-for="LastName" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="DateOfBirth"><i class="bi bi-calendar-date"></i> Date Of Birth</label>
+            <input asp-for="DateOfBirth" class="input2" />
+            <span asp-validation-for="DateOfBirth" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+            <div class="form-check">
+                <label class="form-check-label label-white">Male<i class="bi bi-gender-male"></i>
+                    <input asp-for="Gender" type="radio" class="form-check-input" name="gender" value="Male" checked="">
+                </label> 
+            </div>  
+            <div class="form-check">
+                <label class="form-check-label label-white">Female<i class="bi bi-gender-female"></i>
+                    <input asp-for="Gender" type="radio" class="form-check-input" name="gender" value="Female">
+                </label>
+            </div>
+            <span asp-validation-for="Gender" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="DocumentId"><i class="bi bi-person-bounding-box"></i> Document ID</label>
+            <input asp-for="DocumentId" class="input2" />
+            <span asp-validation-for="DocumentId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="PositionId"><i class="bi bi-person-rolodex"></i> Position</label>
+            <select class="input2" asp-for="PositionId" id="select-position">
+                <option value="">-No position-</option>
+                @if(ViewBag.Positions is not null)
+                @foreach(var obj in ViewBag.Positions)
+                {
+                    <option value="@obj.PositionId">@obj.PositionName</option>
+                }
+            </select>
+            <span asp-validation-for="PositionId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="ManagerId"><i class="bi bi-briefcase"></i> Manager</label>
+            <select class="input2" asp-for="ManagerId" id="select-manager">
+                <option value="">-No manager-</option>
+                @if(ViewBag.Managers is not null)
+                @foreach(var obj in ViewBag.Managers)
+                {
+                    <option value="@obj.UserId">@obj.FirstName @obj.LastName | @{var result = obj.PositionName is null ? "no possition" : obj.PositionName;} @result</option>
+                }
+            </select>
+            <span asp-validation-for="PositionId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="VacationDays"><i class="bi bi-brightness-high"></i> Vacation Days</label>
+            <input asp-for="VacationDays" class="input2" />
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="BankAccount"><i class="bi bi-bank"></i> Bank Account</label>
+            <input asp-for="BankAccount" class="input2" />
+            <span asp-validation-for="BankAccount" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="Address"><i class="bi bi-house"></i> Address</label>
+            <textarea asp-for="Address" class="input2" rows="3"></textarea>
+            <span asp-validation-for="Address" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="SalaryBonus"><i class="bi bi-coin"></i> Salary Bonus</label>
+            <input asp-for="SalaryBonus" class="input2" />
+            <span asp-validation-for="SalaryBonus" class="text-warning"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+        <a asp-controller="User" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+    </div>
+</form>

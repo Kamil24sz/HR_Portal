@@ -1,0 +1,41 @@
+﻿@using HR_Portal.Models;
+@model Training;
+@{
+    ViewData["Title"] = "Delete";
+}
+<form method="post" asp-action="DeletePOST">
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-box"></i> Delete Training</h2>
+        <div asp-validation-summary="All" class="text-warning"></div>
+        <br />
+        <input asp-for="TrainingId" name="id" hidden />
+        <div class="mb-3">
+            <label class="label-gray" asp-for="TrainingName"><i class="bi bi-card-text"></i> Training Name</label>
+            <input disabled asp-for="TrainingName" class="input2"/>
+            <span asp-validation-for="TrainingName" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="TrainingType"><i class="bi bi-people"></i> Training Type</label>
+            <input disabled asp-for="TrainingType" class="input2" />
+            <span asp-validation-for="TrainingType" class="text-warning"></span>
+        </div>        
+        <div class="mb-3">
+            <label class="label-gray" asp-for="Cost"><i class="bi bi-coin"></i> Cost</label>
+            <input disabled asp-for="Cost" class="input2" />
+            <span asp-validation-for="Cost" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="Description"><i class="bi bi-house"></i> Description</label>
+            <textarea asp-for="Description" class="input2" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-warning"></span>
+        </div>
+        <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
+        <a asp-controller="Training" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

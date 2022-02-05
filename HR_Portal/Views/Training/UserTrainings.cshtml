@@ -1,0 +1,82 @@
+﻿@using HR_Portal.Models;
+@model IEnumerable<Training>
+@{
+    ViewData["Title"] = "UserTrainings";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-white">Training List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Training" asp-action="Assign" class="btn btn-primary"><i class="bi bi-plus-circle"></i>&nbsp Request New Training</a>
+        </div>
+    </div>
+</div>
+@if (ViewData["assigned"] is not null)
+{
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Success!</h4>
+        <p class="mb-0">You have already assigned to at least one training! From now all courses are made live in Google Meet platform, Soo now wait for the e-mail with details of meeting from HR Person. After the meeting you progress will be marked. Nice to see that you improve your skills! :)</p>
+    </div>
+}
+
+@if (ViewBag.Trainings is not null)
+{
+    <table class="table table-bordered table-stripped user-table" style="width:100%">
+        <thead>
+            <tr class="table-dark">
+                <th>Training Name</th>
+                <th>Training Type</th>
+                <th>Cost</th>
+                <th>Progress</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in ViewBag.Trainings )
+            {
+                <tr class="table-primary">
+                    <td>
+                        @obj.TrainingName
+                    </td>
+                    <td>
+                        @obj.TrainingType
+                    </td>
+                    <td>
+                        @obj.Cost
+                    </td>
+                    <td>
+                        @if (obj.Progress == 0) {
+                            <span>Assigned</span>
+                            }
+                         @if (obj.Progress == -1) {
+                            <span>Pending Manager Approval</span>
+                            }
+                          @if (obj.Progress == 1) {
+                            <span>Completed</span>
+                            }   
+                        @if (obj.Progress == 2) {
+                            <span>Not Approved</span>
+                            }   
+                    </td>
+                    <td>
+                        <form asp-action="UnAssign">
+                            <input value="@obj.DestinationId" name="id" hidden>
+                            <button type="submit" class="btn btn-sm btn-danger"> <i class="bi bi-trash-fill"></i> UnAssign </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p class="mb-0">You have no assigned any trainings, <strong>Request for new trainings</strong> to improve your skills! Remember that trainings with cost 0 not require any approval, so you can assign yourself right now ;)  Training with another costs requires manager approval.</p>
+    </div>
+}

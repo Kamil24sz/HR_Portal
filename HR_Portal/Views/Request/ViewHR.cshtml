@@ -1,0 +1,68 @@
+﻿@using HR_Portal.Models;
+
+@{
+    ViewData["Title"] = "ViewAll";
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-white">All Requests List</h1>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Requests is not null)
+{
+    <table class="table table-bordered table-stripped user-table mb-5" style="width:100%">
+        <thead>
+            <tr class="table-dark">
+                <th>ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Requestor</th>
+                <th>Creation Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in ViewBag.Requests)
+            {
+
+                <tr class="table-primary">
+                    <td>
+                        @obj.RequestId
+                    </td>
+                    <td>
+                        @obj.RequestName
+                    </td>
+                    <td>
+                        @obj.StatusName
+                    </td>
+                    <td>
+                        @obj.FirstName @obj.LastName
+                    </td>
+                    <td>
+                        @obj.CreationDate
+                    </td>
+                    <td>
+                        <div>
+                            <a asp-controller="Request" asp-action="ChooseStatus" asp-route-id="@obj.RequestId" class="btn btn-sm btn-primary"> <i class="bi bi-info-circle"></i> Info</a>
+                            <a asp-controller="Request" asp-action="RejectHR" asp-route-id="@obj.RequestId" class="btn btn-sm btn-danger"> <i class="bi bi-trash-fill"></i> Reject</a>
+                            <a asp-controller="Request" asp-action="AcceptHR" asp-route-id="@obj.RequestId" class="btn btn-sm btn-success"> <i class="bi bi-check-lg"></i> Accept</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+   <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p class="mb-0">Sorry, there are no existing request for Approve!</p>
+    </div>
+}
+
+</div>

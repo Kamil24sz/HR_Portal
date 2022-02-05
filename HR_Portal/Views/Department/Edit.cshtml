@@ -1,0 +1,42 @@
+﻿@using HR_Portal.Models;
+@model Department;
+@{
+    ViewData["Title"] = "Edit";
+}
+<form method="post" asp-action="Edit">
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-boxes"></i> Update Department</h2>
+        <div asp-validation-summary="All" class="text-warning"></div>
+        <br />
+        <div class="mb-3" style="display:none">
+            <label class="label-gray" asp-for="DepartmentId"><i class="bi bi-person"></i> Department ID</label>
+            <input asp-for="DepartmentId" class="input2"/>
+            <span asp-validation-for="DepartmentId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="DepartmentName"><i class="bi bi-card-text"></i> Department Name</label>
+            <input asp-for="DepartmentName" class="input2" />
+            <span asp-validation-for="DepartmentName" class="text-warning"></span>
+        </div>   
+        <div class="mb-3">
+            <label class="label-gray" asp-for="DirectorId"><i class="bi bi-person-check-fill"></i> Director</label>
+            <select class="input2" asp-for="DirectorId" id="select-director">
+                <option value="">-No director-</option>
+                @if(ViewBag.Directors is not null)
+                @foreach(var obj in ViewBag.Directors)
+                {
+                    <option value="@obj.UserId">@obj.FirstName @obj.LastName | @{var result = obj.PositionName is null ? "no possition" : obj.PositionName;} @result</option>
+                }
+            </select>
+            <span asp-validation-for="DepartmentId" class="text-warning"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Edit</button>
+        <a asp-controller="Department" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

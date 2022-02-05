@@ -1,0 +1,49 @@
+﻿@using HR_Portal.Models;
+@model Training;
+@{
+    ViewData["Title"] = "Edit";
+}
+<form method="post" asp-action="Edit">
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-box"></i> Update Training</h2>
+        <div asp-validation-summary="All" class="text-warning"></div>
+        <br />
+        <div class="mb-3" style="display:none">
+            <label class="label-gray" asp-for="TrainingId"><i class="bi bi-person"></i> Training ID</label>
+            <input asp-for="TrainingId" class="input2"/>
+            <span asp-validation-for="TrainingId" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="TrainingName"><i class="bi bi-card-text"></i> Training Name</label>
+            <input asp-for="TrainingName" class="input2"/>
+            <span asp-validation-for="TrainingName" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="TrainingType"><i class="bi bi-people"></i> Training Type</label>
+            <select asp-for="TrainingType" class="input2">
+                <option value="Internal">Internal</option>
+                <option value="External">External</option>
+                <option value="Other">Other</option>
+            </select>
+            <span asp-validation-for="TrainingType" class="text-warning"></span>
+        </div>        
+        <div class="mb-3">
+            <label class="label-gray" asp-for="Cost"><i class="bi bi-coin"></i> Cost</label>
+            <input asp-for="Cost" class="input2" />
+            <span asp-validation-for="Cost" class="text-warning"></span>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray" asp-for="Description"><i class="bi bi-house"></i> Description</label>
+            <textarea asp-for="Description" class="input2" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-warning"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+        <a asp-controller="Training" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

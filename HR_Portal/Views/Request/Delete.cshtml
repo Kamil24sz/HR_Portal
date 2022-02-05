@@ -1,0 +1,45 @@
+﻿@using HR_Portal.Models;
+@model Request;
+@{
+    ViewData["Title"] = "Info";
+}
+<form method="post" asp-action="DeletePOST">
+    <input name="id" class="input2" asp-for="RequestId" hidden/>
+    @if(ViewBag.Result is not null)
+            foreach(var obj in ViewBag.Result){
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-box"></i> Request Info</h2>
+        <br />
+        <div class="mb-3">
+            <label class="label-gray"><i class="bi bi-123"></i> Request ID</label>
+            <input class="input2" asp-for="RequestId" disabled/>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray"><i class="bi bi-fonts"></i> Request Type</label>
+            <input  class="input2"  value="@obj.RequestName" disabled/>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray"><i class="bi bi-info-square"></i> Status</label>
+            <input  class="input2"  value="@obj.StatusName" disabled/>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray"><i class="bi bi-folder-plus"></i> Additional Information</label>
+            <textarea rows="7" class="input2" disabled>@obj.Description</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="label-gray"><i class="bi bi-calendar-date"></i> Creation Date</label>
+            <input  class="input2"  value="@obj.CreationDate" disabled/>
+        </div>
+                @if((obj.StatusId == 3 || obj.StatusId == 4) || (obj.RequestTypeId == 4 && obj.StatusId ==2))
+                {
+                    <p class="text-warning">Cannot remove requests which are already procesed!</p>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-danger" style="width:150px">Delete</button>
+                }
+                
+        <a asp-controller="Request" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+      </div>
+    }
+</form>

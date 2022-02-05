@@ -1,0 +1,309 @@
+﻿@using HR_Portal.Models;
+@model Request;
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<form method="post" asp-action="Create">
+    <div class="border border-secondary rounded p-3 mt-4">
+        <h2 class="text-white"><i class="bi bi-subtract"></i> Create Request</h2>
+        <div asp-validation-summary="All" class="text-warning"></div>
+        <br />
+        <div class="mb-3">
+            <label class="label-gray" asp-for="RequestTypeId"><i class="bi bi-inbox-fill"></i> Type of Request</label>
+            <select id="select-type" onchange="selector()" class="input2" asp-for="RequestTypeId" id="select-position">
+                @if(ViewBag.RequestTypes is not null)
+                @foreach(var obj in ViewBag.RequestTypes)
+                {
+                    <option value="@obj.RequestTypeId">@obj.RequestName</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3 1">
+            <label class="label-gray"><i class="bi bi-brightness-high-fill"></i> Available Vacation Days</label>
+            <input id="vacation" type="number" class="input2" value="@ViewBag.VacationDays[0].VacationDays" disabled/>
+        </div>
+        <div class="mb-3 1 2">
+            <label class="label-gray"><i class="bi bi-calendar-date" required></i> Date of Start</label>
+            <input type="date" id="start" class="input2" />
+        </div>
+        <div class="mb-3 1 2">
+            <label class="label-gray"><i class="bi bi-calendar-date"></i> Date of End</label>
+            <input type="date" id="end" class="input2" />
+        </div>
+        <div class="mb-3 1 2 calc">
+            <a class="btn btn-primary mb-4 1 2" onclick="counter()" style="width:150px">Calculate</a>
+            <p class="btn btn-secondary mb-4 1 2"  id="result" style="width:150px">calculated days</p>
+        </div>
+        <p class="text-warning" id="error" style="display:none">Error!</p>
+        <div class="mb-3 1">
+            <label class="label-gray"><i class="bi bi-person"></i> Replacement Person</label>
+            <input class="input2" id="replacement"/>
+        </div>
+        <div class="mb-3 4" style="display:none">
+            <label class="label-gray"><i class="bi bi-shop"></i> Place of Delegation</label>
+            <input class="input2" id="place"/>
+        </div>
+        <div class="mb-3 4" style="display:none">
+            <label class="label-gray"><i class="bi bi-info-circle"></i> Drive by Own Car</label>
+            <p class="text-secondary"><input type="checkbox" id="car"/> Check this if you use Own Car to go to the delegation.</p> 
+        </div>
+        <div class="mb-3 5" style="display:none">
+            <label class="label-gray"><i class="bi bi-file-earmark-person-fill"></i> Which personal data you want to change? </label>
+            <select class="input2" id="oldData">
+                 <option value="First Name">First Name</option>
+                 <option value="Last Name">Last Name</option>
+                 <option value="Document ID">Document ID</option>
+                 <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="mb-3 5" style="display:none">
+            <label class="label-gray"><i class="bi bi-arrow-clockwise"></i> New Data</label>
+            <input class="input2" id="newData"/>
+        </div>
+        <div class="mb-3" style="display:none">
+            <label class="label-gray" asp-for="Description"><i class="bi bi-house"></i> Description</label>
+            <textarea asp-for="Description" class="input2" rows="3" id="description"></textarea>
+        </div>
+
+        <a class="btn btn-primary" style="width:150px" onclick="filler()">Create</a>
+        <button type="submit" id="submit" class="btn btn-primary" style="width:150px" hidden>Create</button>
+        <a asp-controller="Request" asp-action="Index" class="btn btn-primary" style="width:150px">Back to list</a>
+        
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+   }
+    <script type="text/javascript">
+    var dropdown = document.getElementById("select-type");
+    var days = document.getElementsByClassName("1 2");
+    var list1 = document.getElementsByClassName("1");
+    var list4 = document.getElementsByClassName("4");
+    var list5 = document.getElementsByClassName("5");
+    var calc = document.getElementsByClassName("calc");
+    var typesID = [1,2,3,4,5];
+    var resultField = document.getElementById("result");
+    var vacation = document.getElementById("vacation");
+    var error = document.getElementById("error");
+
+    function selector(){
+            error.style.display = "none";
+            resultField.textContent = "calculated days";
+            if(dropdown.value == 1 || dropdown.value == 2 || dropdown.value == 3){ 
+                for(var x = 0; x<days.length; x++)
+                    days[x].style.display="block";
+                for(var x = 0; x<list1.length; x++)
+                    list1[x].style.display="block";
+                for(var x = 0; x<list4.length; x++)
+                    list4[x].style.display="none";
+                for(var x = 0; x<list5.length; x++)
+                    list5[x].style.display="none";
+            }
+            if(dropdown.value == 2){
+                for(var x = 0; x<list1.length; x++)
+                    list1[x].style.display="none";
+                for(var x = 0; x<days.length; x++)
+                    days[x].style.display="block";
+            }
+            if(dropdown.value == 4){
+                for(var x = 0; x<list1.length; x++)
+                    list1[x].style.display="none";
+                for(var x = 0; x<days.length; x++)
+                    days[x].style.display="block";
+                for(var x = 0; x<list4.length; x++)
+                    list4[x].style.display="block";
+                for(var x = 0; x<list5.length; x++)
+                    list5[x].style.display="none";
+                for(var x = 0; x<calc.length; x++)
+                    calc[x].style.display="none";
+            }
+            if(dropdown.value == 5){
+                for(var x = 0; x<list1.length; x++)
+                    list1[x].style.display="none";
+                for(var x = 0; x<list4.length; x++)
+                    list4[x].style.display="none";
+                for(var x = 0; x<list5.length; x++)
+                    list5[x].style.display="block";
+            }
+                    
+        }
+
+        
+
+        function counter(){
+
+            var start = new Date(document.getElementById("start").value);
+            var end = new Date(document.getElementById("end").value);
+            var errorCount = 0;
+            var result = 0;
+            var today = new Date(Date.now());
+            today.setHours(0,0,0,0);
+            var year = today.getFullYear();
+            var holidays = [new Date(year,0,1), new Date(year,0,6), new Date(year,3,13), new Date(year,4,1), new Date(year,4,3), new Date(year,5,16),
+                            new Date(year,10,1), new Date(year,10,11), new Date(year,11,25), new Date(year,11,26)]; 
+            error.style.display = "none";
+            resultField.textContent = "calculated days";
+ 
+            if(start < today || end < today){
+                error.textContent = "Start and end date cannot be from past.";
+                error.style.display = "block";
+                errorCount++;
+            }
+            else if(!(isValidDate(start) && isValidDate(end))){
+                error.textContent = "Provide dates.";
+                error.style.display = "block";
+                errorCount++;
+            }
+            else if(start > end){
+                error.textContent = "Start date cannot be later than end date.";
+                error.style.display = "block";
+                errorCount++;
+             }
+             else if(end.getMonth()-start.getMonth() >= 3 || end.getMonth()-start.getMonth()+12 >= 3 && end.getMonth()-start.getMonth()+12 < 12){
+                 error.textContent = "Too long interval, check start and end date.";
+                 error.style.display = "block";
+                 errorCount++;
+             }
+             else if(start.getFullYear()>today.getFullYear()){
+                 error.textContent = "Wrong start date year.";
+                 error.style.display = "block";
+                 errorCount++;
+             }
+             
+             if(errorCount == 0){
+                 var dates = [];
+                 dates.push(new Date(start));
+                 while(end > start){   
+                     dates.push(new Date(start.getTime() + 1000*60*60*24));
+                     start.setDate(start.getDate() +1);
+                 }
+
+                 var dayNumber = 0;
+                 for(var x = 0; x<dates.length; x++){
+                     var temp = 0;
+                     if(dates[x].getDay() != 0 && dates[x].getDay() != 6){
+                         
+                        for(var y = 0; y<holidays.length; y++){
+                            if(dates[x].getDate() == holidays[y].getDate())
+                                if(dates[x].getMonth() == holidays[y].getMonth())
+                                    if(dates[x].getFullYear() == holidays[y].getFullYear())
+                                        temp++;
+                        }
+                        if(temp == 0)    dayNumber++;
+                     }
+                     
+                 }
+             }
+             if(errorCount == 0){
+                if(vacation.value < dayNumber){
+                    error.style.display = "block";
+                    error.textContent = "Too small amount of vaction days, try another dates.";
+                    errorCount++;
+                }
+                else{
+                    resultField.textContent = dayNumber + " days";
+                }
+             }
+          }
+
+          function filler(){
+              var description = document.getElementById("description");
+              var start = new Date(document.getElementById("start").value);
+              var end = new Date(document.getElementById("end").value);
+              var resultField = document.getElementById("result");
+              var replacement = document.getElementById("replacement");
+              var place = document.getElementById("place");
+              var car = document.getElementById("car");
+              var oldData = document.getElementById("oldData");
+              var newData = document.getElementById("newData");
+              error.style.display = "none";
+              var tempError = 0;
+
+              if(dropdown.value == 1){
+                if(isValidDate(start) && isValidDate(end) && replacement.value !== "" && resultField.textContent != "calculated days"){
+                    description.textContent = "";
+                    description.textContent += "Date od Start: " + start.getDate()+"-"+start.getMonth()+"-"+start.getFullYear()+"\n";
+                    description.textContent += "Date od End: " + end.getDate()+"-"+end.getMonth()+"-"+end.getFullYear()+"\n";
+                    description.textContent += "Vacation Days before operation: " + vacation.value+"\n";
+                    description.textContent += "Vacation Days after operation: " + (vacation.value-parseInt(resultField.textContent))+"\n";
+                    description.textContent += "Replacement person: " + replacement.value+"\n";
+                  }
+                  else{
+                      error.textContent = "Make sure, that you fill all the inputs, and calculate days.";
+                      error.style.display = "block";
+                      tempError++;
+                  }
+              }
+              else if(dropdown.value == 2){
+                  if(isValidDate(start) && isValidDate(end) && resultField.textContent != "calculated days"){
+                    description.textContent = "";
+                    description.textContent += "Date od Start: " + start.getDate()+"-"+start.getMonth()+"-"+start.getFullYear()+"\n";
+                    description.textContent += "Date od End: " + end.getDate()+"-"+end.getMonth()+"-"+end.getFullYear()+"\n";
+                    description.textContent += "Working days sick reported: " + resultField.value+"\n";
+                  }
+                  else{
+                      error.textContent = "Make sure, that you fill all the inputs, and calculate days.";
+                      error.style.display = "block";
+                      tempError++;
+                  }
+              }
+              else if(dropdown.value == 3){
+                  if(isValidDate(start) && isValidDate(end) && replacement.value !== "" && resultField.textContent != "calculated days"){
+                    description.textContent = "";
+                    description.textContent += "Date od Start: " + start.getDate()+"-"+start.getMonth()+"-"+start.getFullYear()+"\n";
+                    description.textContent += "Date od End: " + end.getDate()+"-"+end.getMonth()+"-"+end.getFullYear()+"\n";
+                    description.textContent += "Available Vacation days: " + vacation.value+"\n";
+                    description.textContent += "Reported Vacation days: " + resultField.value+"\n";
+                    description.textContent += "Replacement person: " + replacement.value+"\n";
+                   }
+                   else{
+                      error.textContent = "Make sure, that you fill all the inputs, and calculate days.";
+                      error.style.display = "block";
+                      tempError++;
+                   }
+              }
+              else if(dropdown.value == 4){
+                  
+                  if(isValidDate(start) && isValidDate(end) && place.value !== ""){
+                    description.textContent = "";
+                    description.textContent += "Date od Start: " + start.getDate()+"-"+start.getMonth()+"-"+start.getFullYear()+"\n";
+                    description.textContent += "Date od End: " + end.getDate()+"-"+end.getMonth()+"-"+end.getFullYear()+"\n";
+                    description.textContent += "Place of delegation: " + place.value+"\n";
+                    if(car.checked)     
+                        description.textContent += "Drive by own Car" +"\n";
+                  }
+                  else{
+                      error.textContent = "Make sure, that you fill all the inputs, and calculate days.";
+                      error.style.display = "block";
+                      tempError++;
+                   }
+
+              }
+              else if(dropdown.value == 5){
+                  if(newData.value !== ""){
+                    description.textContent = "";
+                    description.textContent += "Data to change: " + newData.value+"\n";
+                    description.textContent += "New value: " + oldData.value+"\n";
+                  }
+                  else{
+                      error.textContent = "Make sure, that you fill all the inputs.";
+                      error.style.display = "block";
+                      tempError++;
+                   }
+              }
+              if(tempError == 0){
+                 var submit =  document.getElementById("submit");
+                 submit.click();
+              }
+          }
+          function isValidDate(d) {
+               return d instanceof Date && !isNaN(d);
+           }
+
+</script>
+
